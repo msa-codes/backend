@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 
 import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
+import { errors } from 'celebrate';
 import 'express-async-errors';
 
 import authConfig from '@config/upload';
@@ -12,9 +14,12 @@ import '@shared/container';
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(authConfig.uploadFolder));
 app.use(routes);
+
+app.use(errors());
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   if (err instanceof AppError) {
