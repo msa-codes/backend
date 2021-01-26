@@ -6,8 +6,8 @@ import AppointmentsController from '../controllers/AppointmentsController';
 import ProviderAppointmentsController from '../controllers/ProviderAppointmentsController';
 
 const appointmentsRouter = Router();
-const appointmentsRepository = new AppointmentsController();
-const providerAppointmentsRepository = new ProviderAppointmentsController();
+const appointmentsController = new AppointmentsController();
+const providerAppointmentsController = new ProviderAppointmentsController();
 
 appointmentsRouter.use(ensureAuthenticated);
 
@@ -19,8 +19,8 @@ appointmentsRouter.post(
       date: Joi.date(),
     },
   }),
-  appointmentsRepository.create,
+  appointmentsController.create,
 );
-appointmentsRouter.get('/me', providerAppointmentsRepository.index);
+appointmentsRouter.get('/me', providerAppointmentsController.index);
 
 export default appointmentsRouter;
